@@ -1,0 +1,844 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="mysql," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="建立数据库连接1234567891011121314var sequelize = new Sequelize(    &apos;dbname&apos;, // 数据库名    &apos;username&apos;,   // 用户名    &apos;password&apos;,   // 用户密码    &amp;#123;        &apos;dialect&apos;: &apos;mysql&apos;,  // 数据库使用mysql        &apos;host&apos;: &apos;local">
+<meta name="keywords" content="mysql">
+<meta property="og:type" content="article">
+<meta property="og:title" content="sequelize和mysql对照">
+<meta property="og:url" content="http://gaianote.github.io/2017/05/04/sequelize和mysql对照/index.html">
+<meta property="og:site_name" content="李云鹏的个人博客">
+<meta property="og:description" content="建立数据库连接1234567891011121314var sequelize = new Sequelize(    &apos;dbname&apos;, // 数据库名    &apos;username&apos;,   // 用户名    &apos;password&apos;,   // 用户密码    &amp;#123;        &apos;dialect&apos;: &apos;mysql&apos;,  // 数据库使用mysql        &apos;host&apos;: &apos;local">
+<meta property="og:updated_time" content="2017-05-16T02:52:15.435Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="sequelize和mysql对照">
+<meta name="twitter:description" content="建立数据库连接1234567891011121314var sequelize = new Sequelize(    &apos;dbname&apos;, // 数据库名    &apos;username&apos;,   // 用户名    &apos;password&apos;,   // 用户密码    &amp;#123;        &apos;dialect&apos;: &apos;mysql&apos;,  // 数据库使用mysql        &apos;host&apos;: &apos;local">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'I64CMLFKUR',
+      apiKey: '98770a16536b68af40add2df362c7d06',
+      indexName: 'next',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://gaianote.github.io/2017/05/04/sequelize和mysql对照/"/>
+
+
+
+
+
+  <title>sequelize和mysql对照 | 李云鹏的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李云鹏的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://gaianote.github.io/2017/05/04/sequelize和mysql对照/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李云鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/rem.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李云鹏的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                sequelize和mysql对照
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-05-04T21:54:15+08:00">
+                2017-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="建立数据库连接"><a href="#建立数据库连接" class="headerlink" title="建立数据库连接"></a>建立数据库连接</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> sequelize = <span class="keyword">new</span> Sequelize(</div><div class="line">    <span class="string">'dbname'</span>, <span class="comment">// 数据库名</span></div><div class="line">    <span class="string">'username'</span>,   <span class="comment">// 用户名</span></div><div class="line">    <span class="string">'password'</span>,   <span class="comment">// 用户密码</span></div><div class="line">    &#123;</div><div class="line">        <span class="string">'dialect'</span>: <span class="string">'mysql'</span>,  <span class="comment">// 数据库使用mysql</span></div><div class="line">        <span class="string">'host'</span>: <span class="string">'localhost'</span>, <span class="comment">// 数据库服务器ip</span></div><div class="line">        <span class="string">'port'</span>: <span class="number">3306</span>,        <span class="comment">// 数据库服务器端口</span></div><div class="line">        <span class="string">'define'</span>: &#123;</div><div class="line">            <span class="comment">// 字段以下划线（_）来分割（默认是驼峰命名风格）</span></div><div class="line">            <span class="string">'underscored'</span>: <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+<h2 id="定义单张表"><a href="#定义单张表" class="headerlink" title="定义单张表"></a>定义单张表</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> User = sequelize.define(</div><div class="line">    <span class="comment">// 默认表名（一般这里写单数），生成时会自动转换成复数形式</span></div><div class="line">    <span class="comment">// 这个值还会作为访问模型相关的模型时的属性名，所以建议用小写形式</span></div><div class="line">    <span class="string">'user'</span>,</div><div class="line">    <span class="comment">// 字段定义（主键、created_at、updated_at默认包含，不用特殊定义）</span></div><div class="line">    &#123;</div><div class="line">        <span class="string">'emp_id'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.CHAR(<span class="number">10</span>), <span class="comment">// 字段类型</span></div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span>,         <span class="comment">// 是否允许为NULL</span></div><div class="line">            <span class="string">'unique'</span>: <span class="literal">true</span>              <span class="comment">// 字段是否UNIQUE(唯一)</span></div><div class="line">        &#125;,</div><div class="line">        <span class="string">'nick'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.CHAR(<span class="number">10</span>),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span></div><div class="line">        &#125;,</div><div class="line">        <span class="string">'department'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.STRING(<span class="number">64</span>),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+<h2 id="单表增删改查"><a href="#单表增删改查" class="headerlink" title="单表增删改查"></a>单表增删改查</h2><p>通过Sequelize获取的模型对象都是一个DAO（Data Access Object）对象，这些对象会拥有许多操作数据库表的实例对象方法（比如：save、update、destroy等），需要获取“干净”的JSON对象可以调用get({‘plain’: true})。</p>
+<p>通过模型的类方法可以获取模型对象（比如：findById、findAll等）。</p>
+<h3 id="增"><a href="#增" class="headerlink" title="增"></a>增</h3><p>Sequelize：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 方法1：build后对象只存在于内存中，调用save后才操作db</span></div><div class="line"><span class="keyword">var</span> user = User.build(&#123;</div><div class="line">    <span class="string">'emp_id'</span>: <span class="string">'1'</span>,</div><div class="line">    <span class="string">'nick'</span>: <span class="string">'小红'</span>,</div><div class="line">    <span class="string">'department'</span>: <span class="string">'技术部'</span></div><div class="line">&#125;);</div><div class="line">user = <span class="keyword">await</span> user.save();</div><div class="line"><span class="built_in">console</span>.log(user.get(&#123;<span class="string">'plain'</span>: <span class="literal">true</span>&#125;));</div><div class="line"></div><div class="line"><span class="comment">// 方法2：直接操作db</span></div><div class="line"><span class="keyword">var</span> user = <span class="keyword">await</span>  User.create(&#123;</div><div class="line">    <span class="string">'emp_id'</span>: <span class="string">'2'</span>,</div><div class="line">    <span class="string">'nick'</span>: <span class="string">'小明'</span>,</div><div class="line">    <span class="string">'department'</span>: <span class="string">'技术部'</span></div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(user.get(&#123;<span class="string">'plain'</span>: <span class="literal">true</span>&#125;));</div></pre></td></tr></table></figure>
+<p>Sequelize会为主键 <code>id</code> 设置 <code>DEFAULT</code> 值来让数据库产生自增值，还将当前时间设置成了 <code>created_at</code> 和 <code>updated_at</code> 字段，非常方便。</p>
+<h3 id="改"><a href="#改" class="headerlink" title="改"></a>改</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 方法1：操作对象属性（不会操作db），调用save后操作db</span></div><div class="line">user.nick = <span class="string">'小白'</span>;</div><div class="line">user = <span class="keyword">await</span> user.save();</div><div class="line"><span class="built_in">console</span>.log(user.get(&#123;<span class="string">'plain'</span>: <span class="literal">true</span>&#125;));</div><div class="line"></div><div class="line"><span class="comment">// 方法2：直接update操作db</span></div><div class="line">user = <span class="keyword">await</span> user.update(&#123;</div><div class="line">    <span class="string">'nick'</span>: <span class="string">'小白白'</span></div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(user.get(&#123;<span class="string">'plain'</span>: <span class="literal">true</span>&#125;));</div></pre></td></tr></table></figure>
+<p>更新操作时，Sequelize将将当前时间设置成了updated_at，非常方便。</p>
+<p>如果想限制更新属性的白名单，可以这样写：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 方法1</span></div><div class="line">user.emp_id = <span class="string">'33'</span>;</div><div class="line">user.nick = <span class="string">'小白'</span>;</div><div class="line">user = <span class="keyword">await</span> user.save(&#123;<span class="string">'fields'</span>: [<span class="string">'nick'</span>]&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 方法2</span></div><div class="line">user = <span class="keyword">await</span> user.update(</div><div class="line">    &#123;<span class="string">'emp_id'</span>: <span class="string">'33'</span>, <span class="string">'nick'</span>: <span class="string">'小白'</span>&#125;,</div><div class="line">    &#123;<span class="string">'fields'</span>: [<span class="string">'nick'</span>]&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>这样就只会更新nick字段，而emp_id会被忽略。这种方法在对表单提交过来的一大推数据中只更新某些属性的时候比较有用。</p>
+<h3 id="删"><a href="#删" class="headerlink" title="删"></a>删</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">await</span> user.destroy();</div></pre></td></tr></table></figure>
+<p>这里有个特殊的地方是，如果我们开启了paranoid（偏执）模式，destroy的时候不会执行DELETE语句，而是执行一个UPDATE语句将deleted_at字段设置为当前时间（一开始此字段值为NULL）。我们可以使用user.destroy({force: true})来强制删除，从而执行DELETE语句进行物理删除。</p>
+<h3 id="查"><a href="#查" class="headerlink" title="查"></a>查</h3><p><strong>查全部</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">await</span> User.findAll();</div><div class="line"><span class="built_in">console</span>.log(users);</div></pre></td></tr></table></figure>
+<p><strong>限制字段</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">await</span> User.findAll(&#123;</div><div class="line">    <span class="string">'attributes'</span>: [<span class="string">'emp_id'</span>, <span class="string">'nick'</span>]</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(users);</div></pre></td></tr></table></figure>
+<p><strong>字段重命名</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">await</span> User.findAll(&#123;</div><div class="line">    <span class="string">'attributes'</span>: [</div><div class="line">        <span class="string">'emp_id'</span>, [<span class="string">'nick'</span>, <span class="string">'user_nick'</span>]</div><div class="line">    ]</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(users);</div></pre></td></tr></table></figure>
+<h2 id="where子句"><a href="#where子句" class="headerlink" title="where子句"></a>where子句</h2><p>Sequelize的where配置项基本上完全支持了SQL的where子句的功能，非常强大。我们一步步来进行介绍。</p>
+<h3 id="基本条件"><a href="#基本条件" class="headerlink" title="基本条件"></a>基本条件</h3><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">await</span> User.findAll(&#123;</div><div class="line">    <span class="string">'where'</span>: &#123;</div><div class="line">        <span class="string">'id'</span>: [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</div><div class="line">        <span class="string">'nick'</span>: <span class="string">'a'</span>,</div><div class="line">        <span class="string">'department'</span>: <span class="literal">null</span></div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(users);</div></pre></td></tr></table></figure>
+<h3 id="操作符"><a href="#操作符" class="headerlink" title="操作符"></a>操作符</h3><p>操作符是对某个字段的进一步约束，可以有多个（对同一个字段的多个操作符会被转化为AND）。</p>
+<p>Sequelize：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">await</span> User.findAll(&#123;</div><div class="line">    <span class="string">'where'</span>: &#123;</div><div class="line">        <span class="string">'id'</span>: &#123;</div><div class="line">            <span class="string">'$eq'</span>: <span class="number">1</span>,                <span class="comment">// id = 1</span></div><div class="line">            <span class="string">'$ne'</span>: <span class="number">2</span>,                <span class="comment">// id != 2</span></div><div class="line"></div><div class="line">            <span class="string">'$gt'</span>: <span class="number">6</span>,                <span class="comment">// id &gt; 6</span></div><div class="line">            <span class="string">'$gte'</span>: <span class="number">6</span>,               <span class="comment">// id &gt;= 6</span></div><div class="line"></div><div class="line">            <span class="string">'$lt'</span>: <span class="number">10</span>,               <span class="comment">// id &lt; 10</span></div><div class="line">            <span class="string">'$lte'</span>: <span class="number">10</span>,              <span class="comment">// id &lt;= 10</span></div><div class="line"></div><div class="line">            <span class="string">'$between'</span>: [<span class="number">6</span>, <span class="number">10</span>],     <span class="comment">// id BETWEEN 6 AND 10</span></div><div class="line">            <span class="string">'$notBetween'</span>: [<span class="number">11</span>, <span class="number">15</span>], <span class="comment">// id NOT BETWEEN 11 AND 15</span></div><div class="line"></div><div class="line">            <span class="string">'$in'</span>: [<span class="number">1</span>, <span class="number">2</span>],           <span class="comment">// id IN (1, 2)</span></div><div class="line">            <span class="string">'$notIn'</span>: [<span class="number">3</span>, <span class="number">4</span>]         <span class="comment">// id NOT IN (3, 4)</span></div><div class="line">        &#125;,</div><div class="line">        <span class="string">'nick'</span>: &#123;</div><div class="line">            <span class="string">'$like'</span>: <span class="string">'%a%'</span>,          <span class="comment">// nick LIKE '%a%'</span></div><div class="line">            <span class="string">'$notLike'</span>: <span class="string">'%a'</span>         <span class="comment">// nick NOT LIKE '%a'</span></div><div class="line">        &#125;,</div><div class="line">        <span class="string">'updated_at'</span>: &#123;</div><div class="line">            <span class="string">'$eq'</span>: <span class="literal">null</span>,             <span class="comment">// updated_at IS NULL</span></div><div class="line">            <span class="string">'$ne'</span>: <span class="literal">null</span>              <span class="comment">// created_at IS NOT NULL</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="条件"><a href="#条件" class="headerlink" title="条件"></a>条件</h3><p>上面我们说的条件查询，都是AND查询，Sequelize同时也支持OR、NOT、甚至多种条件的联合查询。</p>
+<p><strong>AND条件</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">await</span> User.findAll(&#123;</div><div class="line">    <span class="string">'where'</span>: &#123;</div><div class="line">        <span class="string">'$and'</span>: [</div><div class="line">            &#123;<span class="string">'id'</span>: [<span class="number">1</span>, <span class="number">2</span>]&#125;,</div><div class="line">            &#123;<span class="string">'nick'</span>: <span class="literal">null</span>&#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>OR条件</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">await</span> User.findAll(&#123;</div><div class="line">    <span class="string">'where'</span>: &#123;</div><div class="line">        <span class="string">'$or'</span>: [</div><div class="line">            &#123;<span class="string">'id'</span>: [<span class="number">1</span>, <span class="number">2</span>]&#125;,</div><div class="line">            &#123;<span class="string">'nick'</span>: <span class="literal">null</span>&#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p><strong>NOT条件</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">await</span> User.findAll(&#123;</div><div class="line">    <span class="string">'where'</span>: &#123;</div><div class="line">        <span class="string">'$not'</span>: [</div><div class="line">            &#123;<span class="string">'id'</span>: [<span class="number">1</span>, <span class="number">2</span>]&#125;,</div><div class="line">            &#123;<span class="string">'nick'</span>: <span class="literal">null</span>&#125;</div><div class="line">        ]</div><div class="line">    &#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="批量操作"><a href="#批量操作" class="headerlink" title="批量操作"></a>批量操作</h3><p><strong>插入</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">yield</span> User.bulkCreate(</div><div class="line">    [</div><div class="line">        &#123;<span class="string">'emp_id'</span>: <span class="string">'a'</span>, <span class="string">'nick'</span>: <span class="string">'a'</span>&#125;,</div><div class="line">        &#123;<span class="string">'emp_id'</span>: <span class="string">'b'</span>, <span class="string">'nick'</span>: <span class="string">'b'</span>&#125;,</div><div class="line">        &#123;<span class="string">'emp_id'</span>: <span class="string">'c'</span>, <span class="string">'nick'</span>: <span class="string">'c'</span>&#125;</div><div class="line">    ]</div><div class="line">);</div></pre></td></tr></table></figure>
+<p>这里需要注意，返回的users数组里面每个对象的id值会是null。如果需要id值，可以重新取下数据。</p>
+<p><strong>更新</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> affectedRows = <span class="keyword">yield</span> User.update(</div><div class="line">    &#123;<span class="string">'nick'</span>: <span class="string">'hhhh'</span>&#125;,</div><div class="line">    &#123;</div><div class="line">        <span class="string">'where'</span>: &#123;</div><div class="line">            <span class="string">'id'</span>: [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div></pre></td></tr></table></figure>
+<p><strong>删除</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> affectedRows = <span class="keyword">yield</span> User.destroy(&#123;</div><div class="line">    <span class="string">'where'</span>: &#123;<span class="string">'id'</span>: [<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]&#125;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="关系"><a href="#关系" class="headerlink" title="关系"></a>关系</h2><p>关系一般有三种：一对一、一对多、多对多。Sequelize提供了清晰易用的接口来定义关系、进行表间的操作。</p>
+<h3 id="一对一"><a href="#一对一" class="headerlink" title="一对一"></a>一对一</h3><h4 id="模型定义"><a href="#模型定义" class="headerlink" title="模型定义"></a>模型定义</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> User = sequelize.define(<span class="string">'user'</span>,</div><div class="line">    &#123;</div><div class="line">        <span class="string">'emp_id'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.CHAR(<span class="number">10</span>),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span>,</div><div class="line">            <span class="string">'unique'</span>: <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line"><span class="keyword">var</span> Account = sequelize.define(<span class="string">'account'</span>,</div><div class="line">    &#123;</div><div class="line">        <span class="string">'email'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.CHAR(<span class="number">20</span>),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"> * User的实例对象将拥有getAccount、setAccount、addAccount方法</div><div class="line"> */</div><div class="line">User.hasOne(Account);</div><div class="line"><span class="comment">/*</span></div><div class="line"> * Account的实例对象将拥有getUser、setUser、addUser方法</div><div class="line"> */</div><div class="line">Account.belongsTo(User);</div></pre></td></tr></table></figure>
+<p>可以看到，这种关系中外键user_id加在了Account上。另外，Sequelize还给我们生成了外键约束。</p>
+<p>一般来说，外键约束在有些自己定制的数据库系统里面是禁止的，因为会带来一些性能问题。所以，建表的SQL一般就去掉约束，同时给外键加一个索引（加速查询），数据的一致性就靠应用层来保证了。</p>
+<h4 id="关系操作"><a href="#关系操作" class="headerlink" title="关系操作"></a>关系操作</h4><p><strong>增</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> user = <span class="keyword">yield</span> User.create(&#123;<span class="string">'emp_id'</span>: <span class="string">'1'</span>&#125;);</div><div class="line"><span class="keyword">var</span> account = user.createAccount(&#123;<span class="string">'email'</span>: <span class="string">'a'</span>&#125;);</div><div class="line"><span class="built_in">console</span>.log(account.get(&#123;<span class="string">'plain'</span>: <span class="literal">true</span>&#125;));</div></pre></td></tr></table></figure>
+<p><strong>改</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> anotherAccount = <span class="keyword">yield</span> Account.create(&#123;<span class="string">'email'</span>: <span class="string">'b'</span>&#125;);</div><div class="line"><span class="built_in">console</span>.log(anotherAccount);</div><div class="line">anotherAccount = <span class="keyword">yield</span> user.setAccount(anotherAccount);</div><div class="line"><span class="built_in">console</span>.log(anotherAccount);</div></pre></td></tr></table></figure>
+<p><strong>删</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">yield</span> user.setAccount(<span class="literal">null</span>);</div></pre></td></tr></table></figure>
+<p><strong>查</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> account = <span class="keyword">yield</span> user.getAccount();</div><div class="line"><span class="built_in">console</span>.log(account);</div></pre></td></tr></table></figure>
+<p>这里就是调用user的getAccount方法，根据外键来获取对应的account。</p>
+<p>但是其实我们用面向对象的思维来思考应该是获取user的时候就能通过user.account的方式来访问account对象。这可以通过Sequelize的eager loading（急加载，和懒加载相反）来实现。</p>
+<p>eager loading的含义是说，取一个模型的时候，同时也把相关的模型数据也给我取过来（我很着急，不能按默认那种取一个模型就取一个模型的方式，我还要更多）。方法如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> user = <span class="keyword">yield</span> User.findById(<span class="number">1</span>, &#123;</div><div class="line">    <span class="string">'include'</span>: [Account]</div><div class="line">&#125;);</div><div class="line"><span class="built_in">console</span>.log(user.get(&#123;<span class="string">'plain'</span>: <span class="literal">true</span>&#125;));</div><div class="line"><span class="comment">/*</span></div><div class="line"> * 输出类似：</div><div class="line"> &#123; id: 1,</div><div class="line">  emp_id: '1',</div><div class="line">  created_at: Tue Nov 03 2015 15:25:27 GMT+0800 (CST),</div><div class="line">  updated_at: Tue Nov 03 2015 15:25:27 GMT+0800 (CST),</div><div class="line">  account:</div><div class="line">   &#123; id: 2,</div><div class="line">     email: 'b',</div><div class="line">     created_at: Tue Nov 03 2015 15:25:27 GMT+0800 (CST),</div><div class="line">     updated_at: Tue Nov 03 2015 15:25:27 GMT+0800 (CST),</div><div class="line">     user_id: 1 &#125; &#125;</div><div class="line"> */</div></pre></td></tr></table></figure>
+<p>可以看到，我们对2个表进行了一个外联接，从而在取user的同时也获取到了account。</p>
+<p>其他补充说明</p>
+<p>如果我们重复调用user.createAccount方法，实际上会在数据库里面生成多条user_id一样的数据，并不是真正的一对一。</p>
+<p>所以，在应用层保证一致性时，就需要我们遵循良好的编码约定。新增就用user.createAccount，更改就用user.setAccount。</p>
+<p>也可以给user_id加一个UNIQUE约束，在数据库层面保证一致性，这时就需要做好try/catch，发生插入异常的时候能够知道是因为插入了多个account。</p>
+<p>另外，我们上面都是使用user来对account进行操作。实际上反向操作也是可以的，这是因为我们定义了Account.belongsTo(User)。在Sequelize里面定义关系时，关系的调用方会获得相关的“关系”方法，一般为了两边都能操作，会同时定义双向关系（这里双向关系指的是模型层面，并不会在数据库表中出现两个表都加上外键的情况，请放心）。</p>
+<h3 id="一对多"><a href="#一对多" class="headerlink" title="一对多"></a>一对多</h3><h4 id="模型定义"><a href="#模型定义-1" class="headerlink" title="模型定义"></a>模型定义</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> User = sequelize.define(<span class="string">'user'</span>,</div><div class="line">    &#123;</div><div class="line">        <span class="string">'emp_id'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.CHAR(<span class="number">10</span>),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span>,</div><div class="line">            <span class="string">'unique'</span>: <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line"><span class="keyword">var</span> Note = sequelize.define(<span class="string">'note'</span>,</div><div class="line">    &#123;</div><div class="line">        <span class="string">'title'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.CHAR(<span class="number">64</span>),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">/*</span></div><div class="line"> * User的实例对象将拥有getNotes、setNotes、addNote、createNote、removeNote、hasNote方法</div><div class="line"> */</div><div class="line">User.hasMany(Note);</div><div class="line"><span class="comment">/*</span></div><div class="line"> * Note的实例对象将拥有getUser、setUser、createUser方法</div><div class="line"> */</div><div class="line">Note.belongsTo(User);</div></pre></td></tr></table></figure>
+<h4 id="关系操作"><a href="#关系操作-1" class="headerlink" title="关系操作"></a>关系操作</h4><p><strong>增</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//方法1</span></div><div class="line"><span class="keyword">var</span> user = <span class="keyword">yield</span> User.create(&#123;<span class="string">'emp_id'</span>: <span class="string">'1'</span>&#125;);</div><div class="line"><span class="keyword">var</span> note = <span class="keyword">yield</span> user.createNote(&#123;<span class="string">'title'</span>: <span class="string">'a'</span>&#125;);</div><div class="line"><span class="built_in">console</span>.log(note);</div><div class="line"><span class="comment">//方法2</span></div><div class="line"><span class="keyword">var</span> user = <span class="keyword">yield</span> User.create(&#123;<span class="string">'emp_id'</span>: <span class="string">'1'</span>&#125;);</div><div class="line"><span class="keyword">var</span> note = <span class="keyword">yield</span> Note.create(&#123;<span class="string">'title'</span>: <span class="string">'b'</span>&#125;);</div><div class="line"><span class="keyword">yield</span> user.addNote(note);</div></pre></td></tr></table></figure>
+<p><strong>改</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 为user增加note1、note2</span></div><div class="line"><span class="keyword">var</span> user = <span class="keyword">yield</span> User.create(&#123;<span class="string">'emp_id'</span>: <span class="string">'1'</span>&#125;);</div><div class="line"><span class="keyword">var</span> note1 = <span class="keyword">yield</span> user.createNote(&#123;<span class="string">'title'</span>: <span class="string">'a'</span>&#125;);</div><div class="line"><span class="keyword">var</span> note2 = <span class="keyword">yield</span> user.createNote(&#123;<span class="string">'title'</span>: <span class="string">'b'</span>&#125;);</div><div class="line"><span class="comment">// 先创建note3、note4</span></div><div class="line"><span class="keyword">var</span> note3 = <span class="keyword">yield</span> Note.create(&#123;<span class="string">'title'</span>: <span class="string">'c'</span>&#125;);</div><div class="line"><span class="keyword">var</span> note4 = <span class="keyword">yield</span> Note.create(&#123;<span class="string">'title'</span>: <span class="string">'d'</span>&#125;);</div><div class="line"><span class="comment">// user拥有的note更改为note3、note4</span></div><div class="line"><span class="keyword">yield</span> user.setNotes([note3, note4]);</div></pre></td></tr></table></figure>
+<p><strong>删</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">yield</span> user.removeNote(note);</div></pre></td></tr></table></figure>
+<p><strong>查</strong></p>
+<p>情况1</p>
+<p>查询user的所有满足条件的note数据。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> notes = <span class="keyword">yield</span> user.getNotes(&#123;</div><div class="line">    <span class="string">'where'</span>: &#123;</div><div class="line">        <span class="string">'title'</span>: &#123;</div><div class="line">            <span class="string">'$like'</span>: <span class="string">'%css%'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">notes.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">note</span>) </span>&#123;</div><div class="line">    <span class="built_in">console</span>.log(note);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>情况2</p>
+<p>查询所有满足条件的note，同时获取note属于哪个user。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> notes = <span class="keyword">yield</span> Note.findAll(&#123;</div><div class="line">    <span class="string">'include'</span>: [User],</div><div class="line">    <span class="string">'where'</span>: &#123;</div><div class="line">        <span class="string">'title'</span>: &#123;</div><div class="line">            <span class="string">'$like'</span>: <span class="string">'%css%'</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">notes.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">note</span>) </span>&#123;</div><div class="line">    <span class="comment">// note属于哪个user可以通过note.user访问</span></div><div class="line">    <span class="built_in">console</span>.log(note);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>情况3</p>
+<p>查询所有满足条件的user，同时获取该user所有满足条件的note。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> users = <span class="keyword">yield</span> User.findAll(&#123;</div><div class="line">    <span class="string">'include'</span>: [Note],</div><div class="line">    <span class="string">'where'</span>: &#123;</div><div class="line">        <span class="string">'created_at'</span>: &#123;</div><div class="line">            <span class="string">'$lt'</span>: <span class="keyword">new</span> <span class="built_in">Date</span>()</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line">users.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">user</span>) </span>&#123;</div><div class="line">    <span class="comment">// user的notes可以通过user.notes访问</span></div><div class="line">    <span class="built_in">console</span>.log(user);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h3 id="多对多关系"><a href="#多对多关系" class="headerlink" title="多对多关系"></a>多对多关系</h3><p>在多对多关系中，必须要额外一张关系表来将2个表进行关联，这张表可以是单纯的一个关系表，也可以是一个实际的模型（含有自己的额外属性来描述关系）。我比较喜欢用一个模型的方式，这样方便以后做扩展。</p>
+<h4 id="模型定义"><a href="#模型定义-2" class="headerlink" title="模型定义"></a>模型定义</h4><figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> Note = sequelize.define(<span class="string">'note'</span>,</div><div class="line">    &#123;</div><div class="line">        <span class="string">'title'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.CHAR(<span class="number">64</span>),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line"><span class="keyword">var</span> Tag = sequelize.define(<span class="string">'tag'</span>,</div><div class="line">    &#123;</div><div class="line">        <span class="string">'name'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.CHAR(<span class="number">64</span>),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span>,</div><div class="line">            <span class="string">'unique'</span>: <span class="literal">true</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line"><span class="keyword">var</span> Tagging = sequelize.define(<span class="string">'tagging'</span>,</div><div class="line">    &#123;</div><div class="line">        <span class="string">'type'</span>: &#123;</div><div class="line">            <span class="string">'type'</span>: Sequelize.INTEGER(),</div><div class="line">            <span class="string">'allowNull'</span>: <span class="literal">false</span></div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">);</div><div class="line"></div><div class="line"><span class="comment">// Note的实例拥有getTags、setTags、addTag、addTags、createTag、removeTag、hasTag方法</span></div><div class="line">Note.belongsToMany(Tag, &#123;<span class="string">'through'</span>: Tagging&#125;);</div><div class="line"><span class="comment">// Tag的实例拥有getNotes、setNotes、addNote、addNotes、createNote、removeNote、hasNote方法</span></div><div class="line">Tag.belongsToMany(Note, &#123;<span class="string">'through'</span>: Tagging&#125;);</div></pre></td></tr></table></figure>
+<p><strong>增</strong></p>
+<p>方法1</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> note = <span class="keyword">yield</span> Note.create(&#123;<span class="string">'title'</span>: <span class="string">'note'</span>&#125;);</div><div class="line"><span class="keyword">yield</span> note.createTag(&#123;<span class="string">'name'</span>: <span class="string">'tag'</span>&#125;, &#123;<span class="string">'type'</span>: <span class="number">0</span>&#125;);</div></pre></td></tr></table></figure>
+<p>方法2</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> note = <span class="keyword">yield</span> Note.create(&#123;<span class="string">'title'</span>: <span class="string">'note'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag'</span>&#125;);</div><div class="line"><span class="keyword">yield</span> note.addTag(tag, &#123;<span class="string">'type'</span>: <span class="number">1</span>&#125;);</div></pre></td></tr></table></figure>
+<p>方法3</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> note = <span class="keyword">yield</span> Note.create(&#123;<span class="string">'title'</span>: <span class="string">'note'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag1 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag1'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag2 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag2'</span>&#125;);</div><div class="line"><span class="keyword">yield</span> note.addTags([tag1, tag2], &#123;<span class="string">'type'</span>: <span class="number">2</span>&#125;);</div></pre></td></tr></table></figure>
+<p><strong>改</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 先添加几个tag</span></div><div class="line"><span class="keyword">var</span> note = <span class="keyword">yield</span> Note.create(&#123;<span class="string">'title'</span>: <span class="string">'note'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag1 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag1'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag2 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag2'</span>&#125;);</div><div class="line"><span class="keyword">yield</span> note.addTags([tag1, tag2], &#123;<span class="string">'type'</span>: <span class="number">2</span>&#125;);</div><div class="line"><span class="comment">// 将tag改掉</span></div><div class="line"><span class="keyword">var</span> tag3 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag3'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag4 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag4'</span>&#125;);</div><div class="line"><span class="keyword">yield</span> note.setTags([tag3, tag4], &#123;<span class="string">'type'</span>: <span class="number">3</span>&#125;);</div></pre></td></tr></table></figure>
+<p><strong>删</strong></p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line"><span class="comment">// 先添加几个tag</span></div><div class="line"><span class="keyword">var</span> note = <span class="keyword">yield</span> Note.create(&#123;<span class="string">'title'</span>: <span class="string">'note'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag1 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag1'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag2 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag2'</span>&#125;);</div><div class="line"><span class="keyword">var</span> tag3 = <span class="keyword">yield</span> Tag.create(&#123;<span class="string">'name'</span>: <span class="string">'tag2'</span>&#125;);</div><div class="line"><span class="keyword">yield</span> note.addTags([tag1, tag2, tag3], &#123;<span class="string">'type'</span>: <span class="number">2</span>&#125;);</div><div class="line"></div><div class="line"><span class="comment">// 删除一个</span></div><div class="line"><span class="keyword">yield</span> note.removeTag(tag1);</div><div class="line"></div><div class="line"><span class="comment">// 全部删除</span></div><div class="line"><span class="keyword">yield</span> note.setTags([]);</div></pre></td></tr></table></figure>
+<p>删除一个很简单，直接将关系表中的数据删除。</p>
+<p>全部删除时，首先需要查出关系表中note_id对应的所有数据，然后一次删掉。</p>
+<p><strong>查</strong></p>
+<p>情况1</p>
+<p>查询note所有满足条件的tag。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> tags = <span class="keyword">yield</span> note.getTags(&#123;</div><div class="line">    <span class="comment">//这里可以对tags进行where</span></div><div class="line">&#125;);</div><div class="line">tags.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">tag</span>) </span>&#123;</div><div class="line">    <span class="comment">// 关系模型可以通过tag.tagging来访问</span></div><div class="line">    <span class="built_in">console</span>.log(tag);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>情况2</p>
+<p>查询所有满足条件的tag，同时获取每个tag所在的note。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> tags = <span class="keyword">yield</span> Tag.findAll(&#123;</div><div class="line">    <span class="string">'include'</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="string">'model'</span>: Note</div><div class="line">            <span class="comment">// 这里可以对notes进行where</span></div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">    <span class="comment">// 这里可以对tags进行where</span></div><div class="line">&#125;);</div><div class="line">tags.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">tag</span>) </span>&#123;</div><div class="line">    <span class="comment">// tag的notes可以通过tag.notes访问，关系模型可以通过tag.notes[0].tagging访问</span></div><div class="line">    <span class="built_in">console</span>.log(tag);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>情况3</p>
+<p>查询所有满足条件的note，同时获取每个note所有满足条件的tag。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">var</span> notes = <span class="keyword">yield</span> Note.findAll(&#123;</div><div class="line">    <span class="string">'include'</span>: [</div><div class="line">        &#123;</div><div class="line">            <span class="string">'model'</span>: Tag</div><div class="line">            <span class="comment">// 这里可以对tags进行where</span></div><div class="line">        &#125;</div><div class="line">    ]</div><div class="line">    <span class="comment">// 这里可以对notes进行where</span></div><div class="line">&#125;);</div><div class="line">notes.forEach(<span class="function"><span class="keyword">function</span>(<span class="params">note</span>) </span>&#123;</div><div class="line">    <span class="comment">// note的tags可以通过note.tags访问，关系模型通过note.tags[0].tagging访问</span></div><div class="line">    <span class="built_in">console</span>.log(note);</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="https://segmentfault.com/a/1190000003987871" target="_blank" rel="external">sequelize和mysql对照</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/mysql/" rel="tag"># mysql</a>
+          
+        </div>
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/05/03/koa2学习系列教程7koa与REST规范/" rel="next" title="koa2学习系列教程7 koa与REST规范">
+                <i class="fa fa-chevron-left"></i> koa2学习系列教程7 koa与REST规范
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/05/05/ReactNative搭建1开发环境/" rel="prev" title="ReactNative搭建1开发环境">
+                ReactNative搭建1开发环境 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/rem.png"
+               alt="李云鹏" />
+          <p class="site-author-name" itemprop="name">李云鹏</p>
+           
+              <p class="site-description motion-element" itemprop="description">萍水相逢也是前世之缘</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#建立数据库连接"><span class="nav-number">1.</span> <span class="nav-text">建立数据库连接</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#定义单张表"><span class="nav-number">2.</span> <span class="nav-text">定义单张表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#单表增删改查"><span class="nav-number">3.</span> <span class="nav-text">单表增删改查</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#增"><span class="nav-number">3.1.</span> <span class="nav-text">增</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#改"><span class="nav-number">3.2.</span> <span class="nav-text">改</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#删"><span class="nav-number">3.3.</span> <span class="nav-text">删</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#查"><span class="nav-number">3.4.</span> <span class="nav-text">查</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#where子句"><span class="nav-number">4.</span> <span class="nav-text">where子句</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#基本条件"><span class="nav-number">4.1.</span> <span class="nav-text">基本条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#操作符"><span class="nav-number">4.2.</span> <span class="nav-text">操作符</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#条件"><span class="nav-number">4.3.</span> <span class="nav-text">条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#批量操作"><span class="nav-number">4.4.</span> <span class="nav-text">批量操作</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#关系"><span class="nav-number">5.</span> <span class="nav-text">关系</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#一对一"><span class="nav-number">5.1.</span> <span class="nav-text">一对一</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模型定义"><span class="nav-number">5.1.1.</span> <span class="nav-text">模型定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关系操作"><span class="nav-number">5.1.2.</span> <span class="nav-text">关系操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#一对多"><span class="nav-number">5.2.</span> <span class="nav-text">一对多</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模型定义"><span class="nav-number">5.2.1.</span> <span class="nav-text">模型定义</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#关系操作"><span class="nav-number">5.2.2.</span> <span class="nav-text">关系操作</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#多对多关系"><span class="nav-number">5.3.</span> <span class="nav-text">多对多关系</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#模型定义"><span class="nav-number">5.3.1.</span> <span class="nav-text">模型定义</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">6.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李云鹏</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,824 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.1" />
+
+
+
+
+
+
+<meta name="description" content="使用node切换命令行目录问题因为日常需要，打算使用nodejs写一个更改cmd命令行目录的小程序,保存一下日常使用的目录，方便进行目录切换，预想效果如下 1234&amp;gt; E:\Users\gaian $ go project&amp;gt; D:\nodejs\demos\project&amp;gt; D:\nodejs\demos\project $ go blog&amp;gt; E:\Users\gaian\">
+<meta property="og:type" content="article">
+<meta property="og:title" content="在windos下使用shell脚本">
+<meta property="og:url" content="http://gaianote.github.io/2017/04/26/在windos下使用shell脚本/index.html">
+<meta property="og:site_name" content="李云鹏的个人博客">
+<meta property="og:description" content="使用node切换命令行目录问题因为日常需要，打算使用nodejs写一个更改cmd命令行目录的小程序,保存一下日常使用的目录，方便进行目录切换，预想效果如下 1234&amp;gt; E:\Users\gaian $ go project&amp;gt; D:\nodejs\demos\project&amp;gt; D:\nodejs\demos\project $ go blog&amp;gt; E:\Users\gaian\">
+<meta property="og:updated_time" content="2017-05-16T02:52:15.498Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="在windos下使用shell脚本">
+<meta name="twitter:description" content="使用node切换命令行目录问题因为日常需要，打算使用nodejs写一个更改cmd命令行目录的小程序,保存一下日常使用的目录，方便进行目录切换，预想效果如下 1234&amp;gt; E:\Users\gaian $ go project&amp;gt; D:\nodejs\demos\project&amp;gt; D:\nodejs\demos\project $ go blog&amp;gt; E:\Users\gaian\">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    sidebar: {"position":"left","display":"post","offset":12,"offset_float":0,"b2t":false,"scrollpercent":false},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: 'I64CMLFKUR',
+      apiKey: '98770a16536b68af40add2df362c7d06',
+      indexName: 'next',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://gaianote.github.io/2017/04/26/在windos下使用shell脚本/"/>
+
+
+
+
+
+  <title>在windos下使用shell脚本 | 李云鹏的个人博客</title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">李云鹏的个人博客</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+  <div class="algolia-popup popup search-popup">
+    <div class="algolia-search">
+      <div class="algolia-search-input-icon">
+        <i class="fa fa-search"></i>
+      </div>
+      <div class="algolia-search-input" id="algolia-search-input"></div>
+    </div>
+
+    <div class="algolia-results">
+      <div id="algolia-stats"></div>
+      <div id="algolia-hits"></div>
+      <div id="algolia-pagination" class="algolia-pagination"></div>
+    </div>
+
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+  </div>
+
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <link itemprop="mainEntityOfPage" href="http://gaianote.github.io/2017/04/26/在windos下使用shell脚本/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="李云鹏">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/rem.png">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="李云鹏的个人博客">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                在windos下使用shell脚本
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-04-26T23:26:56+08:00">
+                2017-04-26
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="使用node切换命令行目录问题"><a href="#使用node切换命令行目录问题" class="headerlink" title="使用node切换命令行目录问题"></a>使用node切换命令行目录问题</h2><p>因为日常需要，打算使用nodejs写一个更改cmd命令行目录的小程序,保存一下日常使用的目录，方便进行目录切换，预想效果如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">&gt; E:\Users\gaian $ go project</div><div class="line">&gt; D:\nodejs\demos\project</div><div class="line">&gt; D:\nodejs\demos\project $ go blog</div><div class="line">&gt; E:\Users\gaian\gaianote.github.io</div></pre></td></tr></table></figure>
+<p>本来以为很简单的几行代码就可以完成，后来发现这个需求居然无法实现，因为node的子进程无法更改父进程的工作目录</p>
+<h2 id="使用shell脚本进行功能实现"><a href="#使用shell脚本进行功能实现" class="headerlink" title="使用shell脚本进行功能实现"></a>使用shell脚本进行功能实现</h2><p>于是打算使用shell进行功能实现，那么什么shell是用户和Linux操作系统之间的接口。Linux中有多种shell，其中缺省使用的是Bash。什么是bash呢? 简单来讲，Linux发行版支持各种各样的GUI（graphical user interfaces），但在某些情况下，Linux的命令行接口(bash)仍然是简单快速的。Bash和Linux Shell需要输入命令来完成任务，因而被称为命令行接口。</p>
+<p>windows下具体步骤如下：</p>
+<p>1.下载一个支持bash的cmd命令行工具，我一直在使用<a href="http://cmder.net/" target="_blank" rel="external">cmder</a>，这款工具美观且功能强大，推荐大家尝试一下,在 cmder 中输入 <code>bash</code> ，就可以从 windows 的命令行模式更改为 bash 模式，非常方便</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># win</div><div class="line">E:\Users\gaian</div><div class="line">λ bash</div><div class="line"></div><div class="line"># bash</div><div class="line">gaian@DESKTOP-OTILKFV  ~</div><div class="line">$</div></pre></td></tr></table></figure>
+<p>其实我们可以通过设置 Cmder ，改为默认以 bash 模式启动 Cmder , 如果你不习惯 win 下的命令的话，可以进行以下设置：</p>
+<p>以管理员身份运行 Cmder ，在 Cmder 中选择 <code>Setting</code> ，然后在 <code>Startup</code> -&gt; <code>Tasks</code> -&gt; <code>{cmd::Cmder}</code> 中输入如下启动方式，这样就可以通过鼠标右键菜单打开 Bash 了，并且是在当前文件夹打开，同时也避免了在 Vim 中方向键失灵的问题。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cmd /k &quot;%ConEmuDir%\..\init.bat&quot;  -new_console:p:n%USERPROFILE% &amp;bash</div></pre></td></tr></table></figure>
+<p>这样我们在打开 Cmder 后，便直接进入 Bash 模式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">gaian@DESKTOP-OTILKFV  ~</div><div class="line">$</div></pre></td></tr></table></figure>
+<p>当我们每次关闭 Cmder 时都会弹出提示框提示 Confirm closing console? ，只需要在 <code>Setting</code> -&gt; <code>Main</code> -&gt; <code>Confirm</code> -&gt; <code>Close confirmations</code> 中取消 When running process was detected 前面选中状态，就可以关闭提示框的弹出。</p>
+<p>2.在user目录下，新建一个 .bashsrc 脚本，写入如下内容用</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">go</span></span>()&#123;</div><div class="line">  <span class="keyword">if</span> [ <span class="variable">$1</span> = <span class="string">"blog"</span> ]; <span class="keyword">then</span></div><div class="line">    <span class="built_in">cd</span> <span class="string">"E:\Users\gaian\gaianote.github.io"</span></div><div class="line">  <span class="keyword">elif</span> [ <span class="variable">$1</span> = <span class="string">"post"</span> ]; <span class="keyword">then</span></div><div class="line">    <span class="built_in">cd</span> <span class="string">"E:\Users\gaian\gaianote.github.io\source\_posts"</span></div><div class="line">  <span class="keyword">fi</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>3.更新 .bashrc 使之立即生效</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ <span class="built_in">cd</span> ~</div><div class="line">$ <span class="built_in">source</span> .bashrc</div></pre></td></tr></table></figure>
+<p>4.使用定义好的shell脚本</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">gaian@DESKTOP-OTILKFV  ~</div><div class="line">$ go blog</div><div class="line">gaian@DESKTOP-OTILKFV  ~/gaianote.github.io</div><div class="line">$ go post</div><div class="line">gaian@DESKTOP-OTILKFV  ~/gaianote.github.io/<span class="built_in">source</span>/_posts</div></pre></td></tr></table></figure>
+<h2 id="bash基本语法"><a href="#bash基本语法" class="headerlink" title="bash基本语法"></a>bash基本语法</h2><p><strong>变量</strong></p>
+<p>bash变量不需要定义，使用时添加$表示变量</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">STR=<span class="string">"Hello World"</span></div><div class="line"><span class="built_in">echo</span> <span class="variable">$STR</span></div></pre></td></tr></table></figure>
+<p><strong>判断语句</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">if</span> [ <span class="string">"foo"</span> = <span class="string">"foo"</span> ]; <span class="keyword">then</span></div><div class="line">  <span class="built_in">echo</span> <span class="string">'nice'</span></div><div class="line"><span class="keyword">fi</span></div></pre></td></tr></table></figure>
+<p><strong>循环语句</strong></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">n=1</div><div class="line"><span class="keyword">while</span> [ <span class="variable">$n</span> -le 10 ]</div><div class="line"><span class="keyword">do</span></div><div class="line">    <span class="built_in">echo</span> <span class="variable">$n</span></div><div class="line">    <span class="built_in">let</span> n++</div><div class="line"><span class="keyword">done</span></div></pre></td></tr></table></figure>
+<p>break 语句可以让程序流程从当前循环体中完全跳出，而 continue 语句可以跳过当次循环的剩余部分并直接进入下一次循环</p>
+<p><strong>函数</strong></p>
+<p>bash 的函数不用传入参数，默认以 $1 $2 表示第一个变量，第二个变量…</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="title">foo</span></span>() &#123;</div><div class="line"><span class="built_in">echo</span> <span class="variable">$1</span></div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">$ foo Hello</div><div class="line">Hello</div></pre></td></tr></table></figure>
+<h2 id="bash常用命令"><a href="#bash常用命令" class="headerlink" title="bash常用命令"></a>bash常用命令</h2><p><code>ls</code> –List</p>
+<p>ls会列举出当前工作目录的内容（文件或文件夹），就跟你在GUI中打开一个文件夹去看里面的内容一样。</p>
+<p><code>mkdir</code> –Make Directory</p>
+<p>mkdir用于新建一个新目录</p>
+<p><code>pwd</code> –Print Working Directory</p>
+<p>pwd显示当前工作目录</p>
+<p><code>cd</code> –Change Directory</p>
+<p>对于当前在终端运行的会中中，cd将给定的文件夹（或目录）设置成当前工作目录。</p>
+<p><code>rmdir</code> –Remove Directory</p>
+<p>rmdir删除给定的目录。</p>
+<p><code>rm</code> –Remove</p>
+<p>rm会删除给定的文件或文件夹，可以使用rm -r递归删除文件夹</p>
+<p><code>cp</code> –Copy</p>
+<p>cp命令对文件或文件夹进行复制，可以使用cp -r选项来递归复制文件夹。</p>
+<p><code>mv</code> –MoVe</p>
+<p>mv命令对文件或文件夹进行移动，如果文件或文件夹存在于当前工作目录，还可以对文件或文件夹进行重命名。</p>
+<p><code>cat</code> –concatenate and print files</p>
+<p>cat用于在标准输出（监控器或屏幕）上查看文件内容</p>
+<p><code>tail</code> –print TAIL (from last) &gt;</p>
+<p>tail默认在标准输出上显示给定文件的最后10行内容，可以使用tail -n N指定在标准输出上显示文件的最后N行内容。</p>
+<p><code>less</code> –print LESS</p>
+<p>less按页或按窗口打印文件内容。在查看包含大量文本数据的大文件时是非常有用和高效的。你可以使用Ctrl+F向前翻页，Ctrl+B向后翻页。</p>
+<p><code>grep</code></p>
+<p>grep “”在给定的文件中搜寻指定的字符串。grep -i “”在搜寻时会忽略字符串的大小写，而grep -r “”则会在当前工作目录的文件中递归搜寻指定的字符串。</p>
+<p><code>Find</code></p>
+<p>这个命令会在给定位置搜寻与条件匹配的文件。你可以使用find -name的-name选项来进行区分大小写的搜寻，find -iname来进行不区分大小写的搜寻。<br>find <folder-to-search> -iname <file-name></file-name></folder-to-search></p>
+<p><code>tar</code></p>
+<p>tar命令能创建、查看和提取tar压缩文件。tar -cvf是创建对应压缩文件，tar -tvf来查看对应压缩文件，tar -xvf来提取对应压缩文件。</p>
+<p><code>gzip</code></p>
+<p>gzip命令创建和提取gzip压缩文件，还可以用gzip -d来提取压缩文件。</p>
+<p><code>unzip</code></p>
+<p>unzip对gzip文档进行解压。在解压之前，可以使用unzip -l命令查看文件内容。</p>
+<p><code>help</code></p>
+<p>–help会在终端列出所有可用的命令,可以使用任何命令的-h或-help选项来查看该命令的具体用法。</p>
+<p><code>whatis</code> –What is this command</p>
+<p>whatis会用单行来描述给定的命令。</p>
+<p><code>man</code> –Manual</p>
+<p>man会为给定的命令显示一个手册页面。</p>
+<p><code>exit</code></p>
+<p>exit用于结束当前的终端会话。</p>
+<p><code>ping</code></p>
+<p>ping通过发送数据包ping远程主机(服务器)，常用与检测网络连接和服务器状态。</p>
+<p><code>who</code> –Who Is logged in</p>
+<p>who能列出当前登录的用户名。</p>
+<p><code>su</code> –Switch User</p>
+<p>su用于切换不同的用户。即使没有使用密码，超级用户也能切换到其它用户。</p>
+<p><code>uname</code></p>
+<p>uname会显示出关于系统的重要信息，如内核名称、主机名、内核版本、处理机类型等等，使用uname -a可以查看所有信息。</p>
+<p><code>free</code> –Free memory</p>
+<p>free会显示出系统的空闲内存、已经占用内存、可利用的交换内存等信息，free -m将结果中的单位转换成KB，而free–g则转换成GB。</p>
+<p><code>df</code> –Disk space Free<br>df查看文件系统中磁盘的使用情况–硬盘已用和可用的存储空间以及其它存储设备。你可以使用df -h将结果以人类可读的方式显示。</p>
+<p><code>ps</code> –ProcesseS</p>
+<p>ps显示系统的运行进程。</p>
+<p><code>Top</code> –TOP processes</p>
+<p>top命令会默认按照CPU的占用情况，显示占用量较大的进程,可以使用top -u查看某个用户的CPU使用排名情况。</p>
+<p><code>shutdown</code></p>
+<p>shutdown用于关闭计算机，而shutdown -r用于重启计算机。</p>
+<p><code>start</code></p>
+<p>以单独窗口运行程序，可以用来打开文件或文件夹,例如 <code>start .</code>打开当前文件夹</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a href="http://zhaochj.blog.51cto.com/368705/1315581" target="_blank" rel="external">bash编程之if……else条件判断</a></p>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/04/26/windows下的cmd命令行速查手册/" rel="next" title="windows下的cmd命令行速查手册">
+                <i class="fa fa-chevron-left"></i> windows下的cmd命令行速查手册
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/04/27/koa2学习系列教程5模板引擎_Nunjucks/" rel="prev" title="koa2学习系列教程5 模板引擎 Nunjucks">
+                koa2学习系列教程5 模板引擎 Nunjucks <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+  <div class="comments" id="comments">
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="/rem.png"
+               alt="李云鹏" />
+          <p class="site-author-name" itemprop="name">李云鹏</p>
+           
+              <p class="site-description motion-element" itemprop="description">萍水相逢也是前世之缘</p>
+          
+        </div>
+        <nav class="site-state motion-element">
+
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">46</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+
+          
+            
+            
+            <div class="site-state-item site-state-tags">
+              
+                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-name">标签</span>
+              
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#使用node切换命令行目录问题"><span class="nav-number">1.</span> <span class="nav-text">使用node切换命令行目录问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用shell脚本进行功能实现"><span class="nav-number">2.</span> <span class="nav-text">使用shell脚本进行功能实现</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash基本语法"><span class="nav-number">3.</span> <span class="nav-text">bash基本语法</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#bash常用命令"><span class="nav-number">4.</span> <span class="nav-text">bash常用命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考资料"><span class="nav-number">5.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">李云鹏</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Pisces
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.1"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.1"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.1"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.1"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.1"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+  
+  
+  <link rel="stylesheet" href="/lib/algolia-instant-search/instantsearch.min.css">
+
+  
+  
+  <script src="/lib/algolia-instant-search/instantsearch.min.js"></script>
+  
+
+  <script src="/js/src/algolia-search.js?v=5.1.1"></script>
+
+
+
+  
+
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

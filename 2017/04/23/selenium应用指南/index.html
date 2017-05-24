@@ -97,7 +97,7 @@
 <meta property="og:url" content="http://gaianote.github.io/2017/04/23/selenium应用指南/index.html">
 <meta property="og:site_name" content="李云鹏的个人博客">
 <meta property="og:description" content="安装selenium1.安装selenium,以管理员身份运行cmd,输入以下命名 1pip install selenium 2.下载chromedriver(),放到python.exe同级目录中 selenium设置请求头selenium设置phantomjs请求头：1234567891011from selenium import webdriverfrom selenium.webdri">
-<meta property="og:updated_time" content="2017-05-16T02:52:15.426Z">
+<meta property="og:updated_time" content="2017-05-22T14:28:36.341Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="selenium应用指南">
 <meta name="twitter:description" content="安装selenium1.安装selenium,以管理员身份运行cmd,输入以下命名 1pip install selenium 2.下载chromedriver(),放到python.exe同级目录中 selenium设置请求头selenium设置phantomjs请求头：1234567891011from selenium import webdriverfrom selenium.webdri">
@@ -375,6 +375,7 @@
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> multiprocessing <span class="keyword">import</span> Pool</div><div class="line">pool = Pool(<span class="number">8</span>)</div><div class="line">data_list = pool.map(get, url_list)</div><div class="line">pool.close()</div><div class="line">pool.join()</div></pre></td></tr></table></figure>
 <h3 id="selenium设置chrome请求头"><a href="#selenium设置chrome请求头：" class="headerlink" title="selenium设置chrome请求头："></a>selenium设置chrome请求头：</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line">options = webdriver.ChromeOptions()</div><div class="line">options.add_argument(<span class="string">'lang=zh_CN.UTF-8'</span>)</div><div class="line"><span class="comment"># 设置header</span></div><div class="line">options.add_argument(<span class="string">'user-agent=Mozilla/5.0 (iPod; U; CPU iPhone OS 2_1 like Mac OS X; ja-jp) AppleWebKit/525.18.1 (KHTML, like Gecko) Version/3.1.1 Mobile/5F137 Safari/525.20'</span>)</div><div class="line"><span class="comment"># 设置代理</span></div><div class="line">options.add_argument(<span class="string">'--proxy-server=127.0.0.1:9999'</span>)</div><div class="line">browser = webdriver.Chrome(chrome_options=options)</div><div class="line">url = <span class="string">"https://httpbin.org/get?show_env=1"</span></div><div class="line">browser.get(url)</div><div class="line">browser.quit()</div></pre></td></tr></table></figure>
 <h3 id="携带cookie"><a href="#携带cookie" class="headerlink" title="携带cookie"></a>携带cookie</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line">browser = webdriver.Chrome()</div><div class="line"></div><div class="line">url = <span class="string">"https://www.baidu.com/"</span></div><div class="line">browser.get(url)</div><div class="line">browser.delete_all_cookies()</div><div class="line">browser.add_cookie(&#123;<span class="string">'name'</span>:<span class="string">'ABC'</span>,<span class="string">'value'</span>:<span class="string">'DEF'</span>&#125;)</div><div class="line">input(<span class="string">"查看效果"</span>)</div><div class="line">browser.quit()</div></pre></td></tr></table></figure>
+<h2 id="超时设置"><a href="#超时设置" class="headerlink" title="超时设置"></a>超时设置</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">from</span> selenium <span class="keyword">import</span> webdriver</div><div class="line">d= webdriver.PhantomJS()</div><div class="line"><span class="comment">#这两种设置都进行才有效</span></div><div class="line"></div><div class="line">d.set_page_load_timeout(<span class="number">10</span>)</div><div class="line">d.set_script_timeout(<span class="number">10</span>)</div></pre></td></tr></table></figure>
 <h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://www.zhihu.com/question/35547395" target="_blank" rel="external">selinium设置请求头</a><br><a href="http://www.jianshu.com/p/9d408e21dc3a" target="_blank" rel="external">盘点selenium phantomJS使用的坑</a><br><a href="http://www.cnblogs.com/TTyb/p/6128323.html" target="_blank" rel="external">selenium设置Chrome</a></p>
 
       
@@ -420,8 +421,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/23/python协程与异步IO/" rel="next" title="python协程与异步IO">
-                <i class="fa fa-chevron-left"></i> python协程与异步IO
+              <a href="/2017/04/23/Python使用requirement.txt实现自动打包部署/" rel="next" title="Python使用requirement.txt实现自动打包部署">
+                <i class="fa fa-chevron-left"></i> Python使用requirement.txt实现自动打包部署
               </a>
             
           </div>
@@ -430,8 +431,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/23/将Python代码打包放到PyPI上/" rel="prev" title="将Python代码打包放到PyPI上">
-                将Python代码打包放到PyPI上 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/23/VPS与虚拟主机/" rel="prev" title="VPS与虚拟主机">
+                VPS与虚拟主机 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -517,7 +518,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -552,7 +553,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装selenium"><span class="nav-number">1.</span> <span class="nav-text">安装selenium</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#selenium设置请求头"><span class="nav-number">2.</span> <span class="nav-text">selenium设置请求头</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#selenium设置phantomjs请求头"><span class="nav-number">2.1.</span> <span class="nav-text">selenium设置phantomjs请求头：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phantomjs详细配置问题"><span class="nav-number">2.2.</span> <span class="nav-text">phantomJS详细配置问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phantomjs与并发"><span class="nav-number">2.3.</span> <span class="nav-text">phantomJS与并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#selenium设置chrome请求头"><span class="nav-number">2.4.</span> <span class="nav-text">selenium设置chrome请求头：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#携带cookie"><span class="nav-number">2.5.</span> <span class="nav-text">携带cookie</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">3.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#安装selenium"><span class="nav-number">1.</span> <span class="nav-text">安装selenium</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#selenium设置请求头"><span class="nav-number">2.</span> <span class="nav-text">selenium设置请求头</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#selenium设置phantomjs请求头"><span class="nav-number">2.1.</span> <span class="nav-text">selenium设置phantomjs请求头：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phantomjs详细配置问题"><span class="nav-number">2.2.</span> <span class="nav-text">phantomJS详细配置问题</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#phantomjs与并发"><span class="nav-number">2.3.</span> <span class="nav-text">phantomJS与并发</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#selenium设置chrome请求头"><span class="nav-number">2.4.</span> <span class="nav-text">selenium设置chrome请求头：</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#携带cookie"><span class="nav-number">2.5.</span> <span class="nav-text">携带cookie</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#超时设置"><span class="nav-number">3.</span> <span class="nav-text">超时设置</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#参考文档"><span class="nav-number">4.</span> <span class="nav-text">参考文档</span></a></li></ol></div>
             
 
           </div>

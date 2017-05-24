@@ -90,17 +90,17 @@
 
 
 
-<meta name="description" content="import requests get请求网址与传递参数 12payload = &amp;#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&amp;#125;r = requests.get(url, params=payload) 定制请求头 12headers = &amp;#123;&apos;user-agent&apos;: &apos;my-app/0.0.1&apos;&amp;#125;r = requests.get(">
+<meta name="description" content="get请求网址与传递参数 12payload = &amp;#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&amp;#125;r = requests.get(url, params=payload) 定制请求头 12headers = &amp;#123;&apos;user-agent&apos;: &apos;my-app/0.0.1&apos;&amp;#125;r = requests.get(url, headers=hea">
 <meta name="keywords" content="python,requests,爬虫">
 <meta property="og:type" content="article">
 <meta property="og:title" content="requests速查手册">
 <meta property="og:url" content="http://gaianote.github.io/2017/04/23/requests速查手册/index.html">
 <meta property="og:site_name" content="李云鹏的个人博客">
-<meta property="og:description" content="import requests get请求网址与传递参数 12payload = &amp;#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&amp;#125;r = requests.get(url, params=payload) 定制请求头 12headers = &amp;#123;&apos;user-agent&apos;: &apos;my-app/0.0.1&apos;&amp;#125;r = requests.get(">
-<meta property="og:updated_time" content="2017-05-16T02:52:15.422Z">
+<meta property="og:description" content="get请求网址与传递参数 12payload = &amp;#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&amp;#125;r = requests.get(url, params=payload) 定制请求头 12headers = &amp;#123;&apos;user-agent&apos;: &apos;my-app/0.0.1&apos;&amp;#125;r = requests.get(url, headers=hea">
+<meta property="og:updated_time" content="2017-05-20T11:42:12.650Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="requests速查手册">
-<meta name="twitter:description" content="import requests get请求网址与传递参数 12payload = &amp;#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&amp;#125;r = requests.get(url, params=payload) 定制请求头 12headers = &amp;#123;&apos;user-agent&apos;: &apos;my-app/0.0.1&apos;&amp;#125;r = requests.get(">
+<meta name="twitter:description" content="get请求网址与传递参数 12payload = &amp;#123;&apos;key1&apos;: &apos;value1&apos;, &apos;key2&apos;: &apos;value2&apos;&amp;#125;r = requests.get(url, params=payload) 定制请求头 12headers = &amp;#123;&apos;user-agent&apos;: &apos;my-app/0.0.1&apos;&amp;#125;r = requests.get(url, headers=hea">
 
 
 
@@ -362,19 +362,28 @@
       
 
       
-        <p>import requests</p>
-<h2 id="get"><a href="#get" class="headerlink" title="get"></a>get</h2><p>请求网址与传递参数</p>
+        <h2 id="get"><a href="#get" class="headerlink" title="get"></a>get</h2><p><strong>请求网址与传递参数</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">payload = &#123;<span class="string">'key1'</span>: <span class="string">'value1'</span>, <span class="string">'key2'</span>: <span class="string">'value2'</span>&#125;</div><div class="line">r = requests.get(url, params=payload)</div></pre></td></tr></table></figure>
-<p>定制请求头</p>
+<p><strong>定制请求头</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">headers = &#123;<span class="string">'user-agent'</span>: <span class="string">'my-app/0.0.1'</span>&#125;</div><div class="line">r = requests.get(url, headers=headers)</div></pre></td></tr></table></figure>
-<p>超时</p>
+<p><strong>超时</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">r = requests.get(url, timeout=<span class="number">0.001</span>)</div></pre></td></tr></table></figure>
-<h2 id="post"><a href="#post" class="headerlink" title="post"></a>post</h2><p>发送表单数据</p>
+<p><strong>短链接</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">r = requests.get(url,headers=&#123;<span class="string">'Connection'</span>:<span class="string">'close'</span>&#125;)</div></pre></td></tr></table></figure>
+<h2 id="post"><a href="#post" class="headerlink" title="post"></a>post</h2><p><strong>发送表单数据</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;</div><div class="line">r = requests.post(url, data=data)</div></pre></td></tr></table></figure>
-<p>发送json数据</p>
+<p><strong>发送json数据</strong></p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># requests会自动序列化data</span></div><div class="line">data = &#123;<span class="string">'key'</span>:<span class="string">'value'</span>&#125;</div><div class="line">r = requests.post(url, json=data)</div></pre></td></tr></table></figure>
 <h2 id="处理返回结果"><a href="#处理返回结果" class="headerlink" title="处理返回结果"></a>处理返回结果</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 得到json</span></div><div class="line">r.json()</div></pre></td></tr></table></figure>
 <h2 id="代理ip"><a href="#代理ip" class="headerlink" title="代理ip"></a>代理ip</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> requests</div><div class="line"></div><div class="line">proxies = &#123;</div><div class="line">  <span class="string">'http'</span>: <span class="string">'http://10.10.1.10:3128'</span>,</div><div class="line">  <span class="string">'https'</span>: <span class="string">'http://10.10.1.10:1080'</span>,</div><div class="line">&#125;</div><div class="line"></div><div class="line">requests.get(<span class="string">'http://example.org'</span>, proxies=proxies)</div></pre></td></tr></table></figure>
+<h2 id="编码与解码问题"><a href="#编码与解码问题" class="headerlink" title="编码与解码问题"></a>编码与解码问题</h2><p>我们可以通过 <code>r.encoding</code> 查看requests抓取文件的编码</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">r = requests.get(url)</div><div class="line"><span class="keyword">print</span> (r.encoding)</div></pre></td></tr></table></figure>
+<p>如果 Requests 检测不到正确的编码，那么你告诉它正确的是什么：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">response.encoding = <span class="string">'gbk'</span></div><div class="line"><span class="keyword">print</span> (response.text)</div></pre></td></tr></table></figure>
+<p>字符串在Python内部的表示是 <code>unicode</code> 编码，因此，在做编码转换时，通常需要以 <code>unicode</code> 作为中间编码，即先将其他编码的字符串解码 <code>decode</code> 成 <code>unicode</code> ，再从 <code>unicode</code> 编码 <code>encode</code> 成另一种编码。</p>
+<p><code>decode</code> 的作用是将其他编码的字符串转换成unicode编码，如 <code>str1.decode(&#39;gb2312&#39;)</code>，表示将 <code>gb2312</code> 编码的字符串 <code>str1</code> 转换成 <code>unicode</code> 编码。</p>
+<p><code>encode</code> 的作用是将 <code>unicode</code> 编码转换成其他编码的字符串，如 <code>str2.encode(&#39;gb2312&#39;)</code>，表示将 <code>unicode</code> 编码的字符串 <code>str2</code> 转换成 <code>gb2312</code>编码。</p>
+<p>如果一个字符串已经是 <code>unicode</code> 了，再进行解码则将出错，因此通常要对其编码方式是否为 <code>unicode</code> 进行判断，用非 <code>unicode</code> 编码形式的str来 <code>encode</code> 会报错</p>
 
       
     </div>
@@ -421,8 +430,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/04/23/python实现windows系统下自动拨号/" rel="next" title="python实现windows系统下自动拨号">
-                <i class="fa fa-chevron-left"></i> python实现windows系统下自动拨号
+              <a href="/2017/04/23/python规范目录结构/" rel="next" title="python规范目录结构">
+                <i class="fa fa-chevron-left"></i> python规范目录结构
               </a>
             
           </div>
@@ -431,8 +440,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2017/04/23/sqlite速查手册/" rel="prev" title="sqlite速查手册">
-                sqlite速查手册 <i class="fa fa-chevron-right"></i>
+              <a href="/2017/04/23/difflib/" rel="prev" title="requests速查手册">
+                requests速查手册 <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -518,7 +527,7 @@
             
             <div class="site-state-item site-state-tags">
               
-                <span class="site-state-item-count">13</span>
+                <span class="site-state-item-count">12</span>
                 <span class="site-state-item-name">标签</span>
               
             </div>
@@ -553,7 +562,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#get"><span class="nav-number">1.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post"><span class="nav-number">2.</span> <span class="nav-text">post</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理返回结果"><span class="nav-number">3.</span> <span class="nav-text">处理返回结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理ip"><span class="nav-number">4.</span> <span class="nav-text">代理ip</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#get"><span class="nav-number">1.</span> <span class="nav-text">get</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#post"><span class="nav-number">2.</span> <span class="nav-text">post</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#处理返回结果"><span class="nav-number">3.</span> <span class="nav-text">处理返回结果</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#代理ip"><span class="nav-number">4.</span> <span class="nav-text">代理ip</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#编码与解码问题"><span class="nav-number">5.</span> <span class="nav-text">编码与解码问题</span></a></li></ol></div>
             
 
           </div>
